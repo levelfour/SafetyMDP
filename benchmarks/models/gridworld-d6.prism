@@ -1,0 +1,82 @@
+// Fixed Gridworld benchmark with row and column coordinates.
+// objectives=6, reachable states=107; row increases southward.
+// The goal is the common absorbing outcome for arrival and safe shutdown.
+mdp
+
+const int LAST = 10;
+const double P_SAFE = 1/100;
+const double P_FORWARD = (1-P_SAFE)*(18/25);
+const double P_LEFT = (1-P_SAFE)*(3/25);
+const double P_RIGHT = (1-P_SAFE)*(3/25);
+const double P_STAY = (1-P_SAFE)*(1/25);
+
+// Wall tests at candidate destinations; an invalid move stays in place.
+formula wall_north =
+    (((row-1)=2 | (row-1)=8) & (col=2 | col=3 | col=7 | col=8)) |
+    (((row-1)=4 | (row-1)=5 | (row-1)=6) & (col=3 | col=7));
+formula wall_east =
+    ((row=2 | row=8) & ((col+1)=2 | (col+1)=3 | (col+1)=7 | (col+1)=8)) |
+    ((row=4 | row=5 | row=6) & ((col+1)=3 | (col+1)=7));
+formula wall_south =
+    (((row+1)=2 | (row+1)=8) & (col=2 | col=3 | col=7 | col=8)) |
+    (((row+1)=4 | (row+1)=5 | (row+1)=6) & (col=3 | col=7));
+formula wall_west =
+    ((row=2 | row=8) & ((col-1)=2 | (col-1)=3 | (col-1)=7 | (col-1)=8)) |
+    ((row=4 | row=5 | row=6) & ((col-1)=3 | (col-1)=7));
+formula north_row = (row>0    & !wall_north) ? row-1 : row;
+formula east_col  = (col<LAST & !wall_east)  ? col+1 : col;
+formula south_row = (row<LAST & !wall_south) ? row+1 : row;
+formula west_col  = (col>0    & !wall_west)  ? col-1 : col;
+
+// Hazard cells are absorbing; all remaining boundary cells are traversable.
+formula hazard_1 = row=0 & col=1;
+formula hazard_2 = row=0 & col=7;
+formula hazard_3 = row=3 & col=10;
+formula hazard_4 = row=10 & col=9;
+formula hazard_5 = row=10 & col=3;
+formula hazard_6 = row=7 & col=0;
+formula at_goal = row=10 & col=10;
+formula terminal = at_goal | hazard_1 | hazard_2 | hazard_3 | hazard_4 | hazard_5 | hazard_6;
+
+module benchmark
+  row : [0..LAST] init 5;
+  col : [0..LAST] init 5;
+
+  [north] !terminal ->
+      P_FORWARD : (row'=north_row)
+    + P_LEFT    : (col'=west_col)
+    + P_RIGHT   : (col'=east_col)
+    + P_STAY    : true
+    + P_SAFE    : (row'=10) & (col'=10);
+
+  [east] !terminal ->
+      P_FORWARD : (col'=east_col)
+    + P_LEFT    : (row'=north_row)
+    + P_RIGHT   : (row'=south_row)
+    + P_STAY    : true
+    + P_SAFE    : (row'=10) & (col'=10);
+
+  [south] !terminal ->
+      P_FORWARD : (row'=south_row)
+    + P_LEFT    : (col'=east_col)
+    + P_RIGHT   : (col'=west_col)
+    + P_STAY    : true
+    + P_SAFE    : (row'=10) & (col'=10);
+
+  [west] !terminal ->
+      P_FORWARD : (col'=west_col)
+    + P_LEFT    : (row'=south_row)
+    + P_RIGHT   : (row'=north_row)
+    + P_STAY    : true
+    + P_SAFE    : (row'=10) & (col'=10);
+
+  [absorb] terminal -> true;
+endmodule
+
+label "hazard_1" = hazard_1;
+label "hazard_2" = hazard_2;
+label "hazard_3" = hazard_3;
+label "hazard_4" = hazard_4;
+label "hazard_5" = hazard_5;
+label "hazard_6" = hazard_6;
+label "safe_completion" = at_goal;

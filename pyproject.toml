@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "finite-mdp-safety"
+version = "0.1.0"
+description = "CEGAR safety verification for terminal-reachability distributions of finite MDPs"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26",
+  "scipy>=1.11",
+  "stormpy>=1.13.2,<1.14",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.scripts]
+mdp-safety = "mdp_safety.cli:main"
+mdp-safety-bench = "mdp_safety.benchmark:main"
+mdp-safety-report = "mdp_safety.benchmark_report:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

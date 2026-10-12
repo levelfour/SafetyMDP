@@ -1,0 +1,14 @@
+/.venv/
+/build/
+/dist/
+/results/
+/tmp/
+/output/
+/benchmarks/results/
+*.egg-info/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.DS_Store

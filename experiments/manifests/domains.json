@@ -1,0 +1,125 @@
+{
+  "suite": "domains",
+  "instances": [
+    {
+      "name": "gridworld-d4-safe",
+      "model": "../../benchmarks/models/gridworld-d4.prism",
+      "specification": "../../benchmarks/specs/gridworld-d4-safe.json"
+    },
+    {
+      "name": "gridworld-d4-unsafe",
+      "model": "../../benchmarks/models/gridworld-d4.prism",
+      "specification": "../../benchmarks/specs/gridworld-d4-unsafe.json"
+    },
+    {
+      "name": "gridworld-d6-safe",
+      "model": "../../benchmarks/models/gridworld-d6.prism",
+      "specification": "../../benchmarks/specs/gridworld-d6-safe.json"
+    },
+    {
+      "name": "gridworld-d6-unsafe",
+      "model": "../../benchmarks/models/gridworld-d6.prism",
+      "specification": "../../benchmarks/specs/gridworld-d6-unsafe.json"
+    },
+    {
+      "name": "gridworld-d8-safe",
+      "model": "../../benchmarks/models/gridworld-d8.prism",
+      "specification": "../../benchmarks/specs/gridworld-d8-safe.json"
+    },
+    {
+      "name": "gridworld-d8-unsafe",
+      "model": "../../benchmarks/models/gridworld-d8.prism",
+      "specification": "../../benchmarks/specs/gridworld-d8-unsafe.json"
+    },
+    {
+      "name": "gridworld-d10-safe",
+      "model": "../../benchmarks/models/gridworld-d10.prism",
+      "specification": "../../benchmarks/specs/gridworld-d10-safe.json"
+    },
+    {
+      "name": "gridworld-d10-unsafe",
+      "model": "../../benchmarks/models/gridworld-d10.prism",
+      "specification": "../../benchmarks/specs/gridworld-d10-unsafe.json"
+    },
+    {
+      "name": "robot-mission-d4-safe",
+      "model": "../../benchmarks/models/robot-mission-d4.prism",
+      "specification": "../../benchmarks/specs/robot-mission-d4-safe.json"
+    },
+    {
+      "name": "robot-mission-d4-unsafe",
+      "model": "../../benchmarks/models/robot-mission-d4.prism",
+      "specification": "../../benchmarks/specs/robot-mission-d4-unsafe.json"
+    },
+    {
+      "name": "robot-mission-d6-safe",
+      "model": "../../benchmarks/models/robot-mission-d6.prism",
+      "specification": "../../benchmarks/specs/robot-mission-d6-safe.json"
+    },
+    {
+      "name": "robot-mission-d6-unsafe",
+      "model": "../../benchmarks/models/robot-mission-d6.prism",
+      "specification": "../../benchmarks/specs/robot-mission-d6-unsafe.json"
+    },
+    {
+      "name": "robot-mission-d8-safe",
+      "model": "../../benchmarks/models/robot-mission-d8.prism",
+      "specification": "../../benchmarks/specs/robot-mission-d8-safe.json"
+    },
+    {
+      "name": "robot-mission-d8-unsafe",
+      "model": "../../benchmarks/models/robot-mission-d8.prism",
+      "specification": "../../benchmarks/specs/robot-mission-d8-unsafe.json"
+    },
+    {
+      "name": "robot-mission-d10-safe",
+      "model": "../../benchmarks/models/robot-mission-d10.prism",
+      "specification": "../../benchmarks/specs/robot-mission-d10-safe.json"
+    },
+    {
+      "name": "robot-mission-d10-unsafe",
+      "model": "../../benchmarks/models/robot-mission-d10.prism",
+      "specification": "../../benchmarks/specs/robot-mission-d10-unsafe.json"
+    },
+    {
+      "name": "network-routing-d4-safe",
+      "model": "../../benchmarks/models/network-routing-d4.prism",
+      "specification": "../../benchmarks/specs/network-routing-d4-safe.json"
+    },
+    {
+      "name": "network-routing-d4-unsafe",
+      "model": "../../benchmarks/models/network-routing-d4.prism",
+      "specification": "../../benchmarks/specs/network-routing-d4-unsafe.json"
+    },
+    {
+      "name": "network-routing-d6-safe",
+      "model": "../../benchmarks/models/network-routing-d6.prism",
+      "specification": "../../benchmarks/specs/network-routing-d6-safe.json"
+    },
+    {
+      "name": "network-routing-d6-unsafe",
+      "model": "../../benchmarks/models/network-routing-d6.prism",
+      "specification": "../../benchmarks/specs/network-routing-d6-unsafe.json"
+    },
+    {
+      "name": "network-routing-d8-safe",
+      "model": "../../benchmarks/models/network-routing-d8.prism",
+      "specification": "../../benchmarks/specs/network-routing-d8-safe.json"
+    },
+    {
+      "name": "network-routing-d8-unsafe",
+      "model": "../../benchmarks/models/network-routing-d8.prism",
+      "specification": "../../benchmarks/specs/network-routing-d8-unsafe.json"
+    },
+    {
+      "name": "network-routing-d10-safe",
+      "model": "../../benchmarks/models/network-routing-d10.prism",
+      "specification": "../../benchmarks/specs/network-routing-d10-safe.json"
+    },
+    {
+      "name": "network-routing-d10-unsafe",
+      "model": "../../benchmarks/models/network-routing-d10.prism",
+      "specification": "../../benchmarks/specs/network-routing-d10-unsafe.json"
+    }
+  ]
+}

@@ -1,0 +1,918 @@
+[
+  {
+    "domain": "gridworld",
+    "dimension": 4,
+    "state_count": 107,
+    "choice_count": 413,
+    "transition_count": 1808,
+    "nondeterministic_state_count": 102,
+    "maximum_actions_per_state": 4,
+    "log10_deterministic_memoryless_scheduler_count": 61.41011911545216,
+    "terminal_labels": [
+      "hazard_1",
+      "hazard_2",
+      "hazard_3",
+      "hazard_4"
+    ],
+    "safe_completion_label": "safe_completion",
+    "design": {
+      "interpretation": "adversarial navigation policy under left/right slip",
+      "grid_side": 11,
+      "horizon": "unbounded",
+      "start": [
+        5,
+        5
+      ],
+      "goal": [
+        10,
+        10
+      ],
+      "hazard_cells": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          10
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          9,
+          0
+        ]
+      ],
+      "obstacle_cells": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          8
+        ]
+      ],
+      "motion_probabilities": {
+        "emergency_safe_shutdown": "1/100",
+        "conditional_intended": "18/25",
+        "conditional_left_slip": "3/25",
+        "conditional_right_slip": "3/25",
+        "conditional_stay": "1/25"
+      },
+      "safe_completion": "goal reached or emergency safe shutdown"
+    }
+  },
+  {
+    "domain": "robot-mission",
+    "dimension": 4,
+    "state_count": 35,
+    "choice_count": 133,
+    "transition_count": 741,
+    "nondeterministic_state_count": 30,
+    "maximum_actions_per_state": 8,
+    "log10_deterministic_memoryless_scheduler_count": 17.664349838300435,
+    "terminal_labels": [
+      "task_1_catastrophic_failure",
+      "task_2_catastrophic_failure",
+      "task_3_catastrophic_failure",
+      "task_4_catastrophic_failure"
+    ],
+    "safe_completion_label": "safe_completion",
+    "design": {
+      "interpretation": "planner chooses the next unfinished task and execution mode under observed weather",
+      "tasks": 4,
+      "horizon": "unbounded; recoverable failures retry without completing a task",
+      "weather_states": [
+        "clear",
+        "storm"
+      ],
+      "modes": {
+        "efficient": {
+          "risk_multiplier": "6/5",
+          "benign_abort": "1/100"
+        },
+        "cautious": {
+          "risk_multiplier": "3/5",
+          "benign_abort": "1/50"
+        }
+      },
+      "task_base_risks": [
+        "7/200",
+        "677/15000",
+        "829/15000",
+        "327/5000"
+      ],
+      "safe_completion": "all tasks completed or benign autonomous abort"
+    }
+  },
+  {
+    "domain": "network-routing",
+    "dimension": 4,
+    "state_count": 37,
+    "choice_count": 101,
+    "transition_count": 653,
+    "nondeterministic_state_count": 32,
+    "maximum_actions_per_state": 3,
+    "log10_deterministic_memoryless_scheduler_count": 15.267880151029198,
+    "terminal_labels": [
+      "failure_class_1",
+      "failure_class_2",
+      "failure_class_3",
+      "failure_class_4"
+    ],
+    "safe_completion_label": "safe_completion",
+    "design": {
+      "interpretation": "router chooses latency/security path at each observed node",
+      "horizon": "unbounded; retries and the secure-detour edge create cycles",
+      "intermediate_nodes": 16,
+      "destination_node": 16,
+      "congestion_states": [
+        "clear",
+        "congested"
+      ],
+      "route_modes": {
+        "low_latency": {
+          "lane_delta": 3,
+          "base_primary_failure": "11/200",
+          "base_secondary_failure": "1/125",
+          "benign_drop": "1/125"
+        },
+        "balanced": {
+          "lane_delta": 2,
+          "base_primary_failure": "7/200",
+          "base_secondary_failure": "3/200",
+          "benign_drop": "3/250"
+        },
+        "secure_detour": {
+          "lane_delta": -1,
+          "base_primary_failure": "1/50",
+          "base_secondary_failure": "1/40",
+          "benign_drop": "1/50"
+        }
+      },
+      "safe_completion": "delivery to the destination or benign packet drop"
+    }
+  },
+  {
+    "domain": "gridworld",
+    "dimension": 6,
+    "state_count": 107,
+    "choice_count": 407,
+    "transition_count": 1776,
+    "nondeterministic_state_count": 100,
+    "maximum_actions_per_state": 4,
+    "log10_deterministic_memoryless_scheduler_count": 60.20599913279624,
+    "terminal_labels": [
+      "hazard_1",
+      "hazard_2",
+      "hazard_3",
+      "hazard_4",
+      "hazard_5",
+      "hazard_6"
+    ],
+    "safe_completion_label": "safe_completion",
+    "design": {
+      "interpretation": "adversarial navigation policy under left/right slip",
+      "grid_side": 11,
+      "horizon": "unbounded",
+      "start": [
+        5,
+        5
+      ],
+      "goal": [
+        10,
+        10
+      ],
+      "hazard_cells": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          3,
+          10
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          10,
+          3
+        ],
+        [
+          7,
+          0
+        ]
+      ],
+      "obstacle_cells": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          8
+        ]
+      ],
+      "motion_probabilities": {
+        "emergency_safe_shutdown": "1/100",
+        "conditional_intended": "18/25",
+        "conditional_left_slip": "3/25",
+        "conditional_right_slip": "3/25",
+        "conditional_stay": "1/25"
+      },
+      "safe_completion": "goal reached or emergency safe shutdown"
+    }
+  },
+  {
+    "domain": "robot-mission",
+    "dimension": 6,
+    "state_count": 133,
+    "choice_count": 775,
+    "transition_count": 4567,
+    "nondeterministic_state_count": 126,
+    "maximum_actions_per_state": 12,
+    "log10_deterministic_memoryless_scheduler_count": 94.05127180500595,
+    "terminal_labels": [
+      "task_1_catastrophic_failure",
+      "task_2_catastrophic_failure",
+      "task_3_catastrophic_failure",
+      "task_4_catastrophic_failure",
+      "task_5_catastrophic_failure",
+      "task_6_catastrophic_failure"
+    ],
+    "safe_completion_label": "safe_completion",
+    "design": {
+      "interpretation": "planner chooses the next unfinished task and execution mode under observed weather",
+      "tasks": 6,
+      "horizon": "unbounded; recoverable failures retry without completing a task",
+      "weather_states": [
+        "clear",
+        "storm"
+      ],
+      "modes": {
+        "efficient": {
+          "risk_multiplier": "6/5",
+          "benign_abort": "1/100"
+        },
+        "cautious": {
+          "risk_multiplier": "3/5",
+          "benign_abort": "1/50"
+        }
+      },
+      "task_base_risks": [
+        "7/200",
+        "1127/25000",
+        "1379/25000",
+        "1631/25000",
+        "883/25000",
+        "227/5000"
+      ],
+      "safe_completion": "all tasks completed or benign autonomous abort"
+    }
+  },
+  {
+    "domain": "network-routing",
+    "dimension": 6,
+    "state_count": 51,
+    "choice_count": 139,
+    "transition_count": 907,
+    "nondeterministic_state_count": 44,
+    "maximum_actions_per_state": 3,
+    "log10_deterministic_memoryless_scheduler_count": 20.993335207665147,
+    "terminal_labels": [
+      "failure_class_1",
+      "failure_class_2",
+      "failure_class_3",
+      "failure_class_4",
+      "failure_class_5",
+      "failure_class_6"
+    ],
+    "safe_completion_label": "safe_completion",
+    "design": {
+      "interpretation": "router chooses latency/security path at each observed node",
+      "horizon": "unbounded; retries and the secure-detour edge create cycles",
+      "intermediate_nodes": 22,
+      "destination_node": 22,
+      "congestion_states": [
+        "clear",
+        "congested"
+      ],
+      "route_modes": {
+        "low_latency": {
+          "lane_delta": 3,
+          "base_primary_failure": "11/200",
+          "base_secondary_failure": "1/125",
+          "benign_drop": "1/125"
+        },
+        "balanced": {
+          "lane_delta": 2,
+          "base_primary_failure": "7/200",
+          "base_secondary_failure": "3/200",
+          "benign_drop": "3/250"
+        },
+        "secure_detour": {
+          "lane_delta": -1,
+          "base_primary_failure": "1/50",
+          "base_secondary_failure": "1/40",
+          "benign_drop": "1/50"
+        }
+      },
+      "safe_completion": "delivery to the destination or benign packet drop"
+    }
+  },
+  {
+    "domain": "gridworld",
+    "dimension": 8,
+    "state_count": 107,
+    "choice_count": 401,
+    "transition_count": 1744,
+    "nondeterministic_state_count": 98,
+    "maximum_actions_per_state": 4,
+    "log10_deterministic_memoryless_scheduler_count": 59.00187915014031,
+    "terminal_labels": [
+      "hazard_1",
+      "hazard_2",
+      "hazard_3",
+      "hazard_4",
+      "hazard_5",
+      "hazard_6",
+      "hazard_7",
+      "hazard_8"
+    ],
+    "safe_completion_label": "safe_completion",
+    "design": {
+      "interpretation": "adversarial navigation policy under left/right slip",
+      "grid_side": 11,
+      "horizon": "unbounded",
+      "start": [
+        5,
+        5
+      ],
+      "goal": [
+        10,
+        10
+      ],
+      "hazard_cells": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          1,
+          10
+        ],
+        [
+          5,
+          10
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          9,
+          0
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "obstacle_cells": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          8
+        ]
+      ],
+      "motion_probabilities": {
+        "emergency_safe_shutdown": "1/100",
+        "conditional_intended": "18/25",
+        "conditional_left_slip": "3/25",
+        "conditional_right_slip": "3/25",
+        "conditional_stay": "1/25"
+      },
+      "safe_completion": "goal reached or emergency safe shutdown"
+    }
+  },
+  {
+    "domain": "robot-mission",
+    "dimension": 8,
+    "state_count": 519,
+    "choice_count": 4105,
+    "transition_count": 24521,
+    "nondeterministic_state_count": 510,
+    "maximum_actions_per_state": 16,
+    "log10_deterministic_memoryless_scheduler_count": 445.29781598166045,
+    "terminal_labels": [
+      "task_1_catastrophic_failure",
+      "task_2_catastrophic_failure",
+      "task_3_catastrophic_failure",
+      "task_4_catastrophic_failure",
+      "task_5_catastrophic_failure",
+      "task_6_catastrophic_failure",
+      "task_7_catastrophic_failure",
+      "task_8_catastrophic_failure"
+    ],
+    "safe_completion_label": "safe_completion",
+    "design": {
+      "interpretation": "planner chooses the next unfinished task and execution mode under observed weather",
+      "tasks": 8,
+      "horizon": "unbounded; recoverable failures retry without completing a task",
+      "weather_states": [
+        "clear",
+        "storm"
+      ],
+      "modes": {
+        "efficient": {
+          "risk_multiplier": "6/5",
+          "benign_abort": "1/100"
+        },
+        "cautious": {
+          "risk_multiplier": "3/5",
+          "benign_abort": "1/50"
+        }
+      },
+      "task_base_risks": [
+        "7/200",
+        "1577/35000",
+        "1929/35000",
+        "2281/35000",
+        "1233/35000",
+        "317/7000",
+        "1937/35000",
+        "327/5000"
+      ],
+      "safe_completion": "all tasks completed or benign autonomous abort"
+    }
+  },
+  {
+    "domain": "network-routing",
+    "dimension": 8,
+    "state_count": 65,
+    "choice_count": 177,
+    "transition_count": 1161,
+    "nondeterministic_state_count": 56,
+    "maximum_actions_per_state": 3,
+    "log10_deterministic_memoryless_scheduler_count": 26.718790264301095,
+    "terminal_labels": [
+      "failure_class_1",
+      "failure_class_2",
+      "failure_class_3",
+      "failure_class_4",
+      "failure_class_5",
+      "failure_class_6",
+      "failure_class_7",
+      "failure_class_8"
+    ],
+    "safe_completion_label": "safe_completion",
+    "design": {
+      "interpretation": "router chooses latency/security path at each observed node",
+      "horizon": "unbounded; retries and the secure-detour edge create cycles",
+      "intermediate_nodes": 28,
+      "destination_node": 28,
+      "congestion_states": [
+        "clear",
+        "congested"
+      ],
+      "route_modes": {
+        "low_latency": {
+          "lane_delta": 3,
+          "base_primary_failure": "11/200",
+          "base_secondary_failure": "1/125",
+          "benign_drop": "1/125"
+        },
+        "balanced": {
+          "lane_delta": 2,
+          "base_primary_failure": "7/200",
+          "base_secondary_failure": "3/200",
+          "benign_drop": "3/250"
+        },
+        "secure_detour": {
+          "lane_delta": -1,
+          "base_primary_failure": "1/50",
+          "base_secondary_failure": "1/40",
+          "benign_drop": "1/50"
+        }
+      },
+      "safe_completion": "delivery to the destination or benign packet drop"
+    }
+  },
+  {
+    "domain": "gridworld",
+    "dimension": 10,
+    "state_count": 107,
+    "choice_count": 395,
+    "transition_count": 1712,
+    "nondeterministic_state_count": 96,
+    "maximum_actions_per_state": 4,
+    "log10_deterministic_memoryless_scheduler_count": 57.79775916748439,
+    "terminal_labels": [
+      "hazard_1",
+      "hazard_2",
+      "hazard_3",
+      "hazard_4",
+      "hazard_5",
+      "hazard_6",
+      "hazard_7",
+      "hazard_8",
+      "hazard_9",
+      "hazard_10"
+    ],
+    "safe_completion_label": "safe_completion",
+    "design": {
+      "interpretation": "adversarial navigation policy under left/right slip",
+      "grid_side": 11,
+      "horizon": "unbounded",
+      "start": [
+        5,
+        5
+      ],
+      "goal": [
+        10,
+        10
+      ],
+      "hazard_cells": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          9
+        ],
+        [
+          3,
+          10
+        ],
+        [
+          7,
+          10
+        ],
+        [
+          10,
+          9
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          10,
+          1
+        ],
+        [
+          7,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "obstacle_cells": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          7
+        ],
+        [
+          2,
+          8
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          4,
+          7
+        ],
+        [
+          5,
+          3
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          6,
+          3
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          8,
+          2
+        ],
+        [
+          8,
+          3
+        ],
+        [
+          8,
+          7
+        ],
+        [
+          8,
+          8
+        ]
+      ],
+      "motion_probabilities": {
+        "emergency_safe_shutdown": "1/100",
+        "conditional_intended": "18/25",
+        "conditional_left_slip": "3/25",
+        "conditional_right_slip": "3/25",
+        "conditional_stay": "1/25"
+      },
+      "safe_completion": "goal reached or emergency safe shutdown"
+    }
+  },
+  {
+    "domain": "robot-mission",
+    "dimension": 10,
+    "state_count": 2057,
+    "choice_count": 20491,
+    "transition_count": 122811,
+    "nondeterministic_state_count": 2046,
+    "maximum_actions_per_state": 20,
+    "log10_deterministic_memoryless_scheduler_count": 1994.665254196694,
+    "terminal_labels": [
+      "task_1_catastrophic_failure",
+      "task_2_catastrophic_failure",
+      "task_3_catastrophic_failure",
+      "task_4_catastrophic_failure",
+      "task_5_catastrophic_failure",
+      "task_6_catastrophic_failure",
+      "task_7_catastrophic_failure",
+      "task_8_catastrophic_failure",
+      "task_9_catastrophic_failure",
+      "task_10_catastrophic_failure"
+    ],
+    "safe_completion_label": "safe_completion",
+    "design": {
+      "interpretation": "planner chooses the next unfinished task and execution mode under observed weather",
+      "tasks": 10,
+      "horizon": "unbounded; recoverable failures retry without completing a task",
+      "weather_states": [
+        "clear",
+        "storm"
+      ],
+      "modes": {
+        "efficient": {
+          "risk_multiplier": "6/5",
+          "benign_abort": "1/100"
+        },
+        "cautious": {
+          "risk_multiplier": "3/5",
+          "benign_abort": "1/50"
+        }
+      },
+      "task_base_risks": [
+        "7/200",
+        "2027/45000",
+        "2479/45000",
+        "977/15000",
+        "1583/45000",
+        "407/9000",
+        "829/15000",
+        "2939/45000",
+        "1591/45000",
+        "227/5000"
+      ],
+      "safe_completion": "all tasks completed or benign autonomous abort"
+    }
+  },
+  {
+    "domain": "network-routing",
+    "dimension": 10,
+    "state_count": 79,
+    "choice_count": 215,
+    "transition_count": 1415,
+    "nondeterministic_state_count": 68,
+    "maximum_actions_per_state": 3,
+    "log10_deterministic_memoryless_scheduler_count": 32.44424532093704,
+    "terminal_labels": [
+      "failure_class_1",
+      "failure_class_2",
+      "failure_class_3",
+      "failure_class_4",
+      "failure_class_5",
+      "failure_class_6",
+      "failure_class_7",
+      "failure_class_8",
+      "failure_class_9",
+      "failure_class_10"
+    ],
+    "safe_completion_label": "safe_completion",
+    "design": {
+      "interpretation": "router chooses latency/security path at each observed node",
+      "horizon": "unbounded; retries and the secure-detour edge create cycles",
+      "intermediate_nodes": 34,
+      "destination_node": 34,
+      "congestion_states": [
+        "clear",
+        "congested"
+      ],
+      "route_modes": {
+        "low_latency": {
+          "lane_delta": 3,
+          "base_primary_failure": "11/200",
+          "base_secondary_failure": "1/125",
+          "benign_drop": "1/125"
+        },
+        "balanced": {
+          "lane_delta": 2,
+          "base_primary_failure": "7/200",
+          "base_secondary_failure": "3/200",
+          "benign_drop": "3/250"
+        },
+        "secure_detour": {
+          "lane_delta": -1,
+          "base_primary_failure": "1/50",
+          "base_secondary_failure": "1/40",
+          "benign_drop": "1/50"
+        }
+      },
+      "safe_completion": "delivery to the destination or benign packet drop"
+    }
+  }
+]

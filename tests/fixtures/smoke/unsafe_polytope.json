@@ -1,0 +1,9 @@
+{
+  "terminal_labels": ["terminal_left", "terminal_right"],
+  "safe_region": {
+    "type": "polytope",
+    "A": [[1.0, 1.0]],
+    "b": [0.6]
+  }
+}
+

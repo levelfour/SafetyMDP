@@ -1,0 +1,155 @@
+// Fixed robot-mission benchmark: task-completion bits and observed weather.
+// While outcome=0, done_i=true means task i has completed successfully.
+// On absorption, all bits are canonically true and weather=0; ignore bits then.
+// outcome: 0=running, 1..TASKS=task failure, TASKS+1=completion or benign abort.
+mdp
+
+const int TASKS = 6;
+const double EFFICIENT_RISK = 6/5;
+const double CAUTIOUS_RISK = 3/5;
+const double EFFICIENT_ABORT = 1/100;
+const double CAUTIOUS_ABORT = 1/50;
+const double EFFICIENT_RETRY = 9/100;
+const double CAUTIOUS_RETRY = 14/100;
+
+formula weather_factor = weather=0 ? 1 : 3/2;
+formula completed = (done1 ? 1 : 0) + (done2 ? 1 : 0) + (done3 ? 1 : 0) + (done4 ? 1 : 0) + (done5 ? 1 : 0) + (done6 ? 1 : 0);
+formula last_task = completed=TASKS-1;
+formula after_success = last_task ? TASKS+1 : 0;
+formula storm_after_success = last_task ? 0 : 1;
+
+formula risk1 = (350/10000 + 0/(2500*(TASKS-1))) * weather_factor;
+formula efficient_success1 = 1 - EFFICIENT_RISK*risk1 - EFFICIENT_ABORT - EFFICIENT_RETRY;
+formula cautious_success1 = 1 - CAUTIOUS_RISK*risk1 - CAUTIOUS_ABORT - CAUTIOUS_RETRY;
+formula risk2 = (450/10000 + 1/(2500*(TASKS-1))) * weather_factor;
+formula efficient_success2 = 1 - EFFICIENT_RISK*risk2 - EFFICIENT_ABORT - EFFICIENT_RETRY;
+formula cautious_success2 = 1 - CAUTIOUS_RISK*risk2 - CAUTIOUS_ABORT - CAUTIOUS_RETRY;
+formula risk3 = (550/10000 + 2/(2500*(TASKS-1))) * weather_factor;
+formula efficient_success3 = 1 - EFFICIENT_RISK*risk3 - EFFICIENT_ABORT - EFFICIENT_RETRY;
+formula cautious_success3 = 1 - CAUTIOUS_RISK*risk3 - CAUTIOUS_ABORT - CAUTIOUS_RETRY;
+formula risk4 = (650/10000 + 3/(2500*(TASKS-1))) * weather_factor;
+formula efficient_success4 = 1 - EFFICIENT_RISK*risk4 - EFFICIENT_ABORT - EFFICIENT_RETRY;
+formula cautious_success4 = 1 - CAUTIOUS_RISK*risk4 - CAUTIOUS_ABORT - CAUTIOUS_RETRY;
+formula risk5 = (350/10000 + 4/(2500*(TASKS-1))) * weather_factor;
+formula efficient_success5 = 1 - EFFICIENT_RISK*risk5 - EFFICIENT_ABORT - EFFICIENT_RETRY;
+formula cautious_success5 = 1 - CAUTIOUS_RISK*risk5 - CAUTIOUS_ABORT - CAUTIOUS_RETRY;
+formula risk6 = (450/10000 + 5/(2500*(TASKS-1))) * weather_factor;
+formula efficient_success6 = 1 - EFFICIENT_RISK*risk6 - EFFICIENT_ABORT - EFFICIENT_RETRY;
+formula cautious_success6 = 1 - CAUTIOUS_RISK*risk6 - CAUTIOUS_ABORT - CAUTIOUS_RETRY;
+
+module benchmark
+  done1 : bool init false;
+  done2 : bool init false;
+  done3 : bool init false;
+  done4 : bool init false;
+  done5 : bool init false;
+  done6 : bool init false;
+  weather : [0..1] init 0; // 0=clear, 1=storm
+  outcome : [0..TASKS+1] init 0;
+
+  [attempt_task_1_efficient] outcome=0 & !done1 ->
+      EFFICIENT_RISK*risk1 : (outcome'=1) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + EFFICIENT_ABORT : (outcome'=TASKS+1) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + (4/5)*efficient_success1 : (done1'=true) & (weather'=0) & (outcome'=after_success)
+    + (1/5)*efficient_success1 : (done1'=true) & (weather'=storm_after_success) & (outcome'=after_success)
+    + (1/3)*EFFICIENT_RETRY : (weather'=0)
+    + (2/3)*EFFICIENT_RETRY : (weather'=1);
+
+  [attempt_task_1_cautious] outcome=0 & !done1 ->
+      CAUTIOUS_RISK*risk1 : (outcome'=1) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + CAUTIOUS_ABORT : (outcome'=TASKS+1) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + (4/5)*cautious_success1 : (done1'=true) & (weather'=0) & (outcome'=after_success)
+    + (1/5)*cautious_success1 : (done1'=true) & (weather'=storm_after_success) & (outcome'=after_success)
+    + (1/3)*CAUTIOUS_RETRY : (weather'=0)
+    + (2/3)*CAUTIOUS_RETRY : (weather'=1);
+
+  [attempt_task_2_efficient] outcome=0 & !done2 ->
+      EFFICIENT_RISK*risk2 : (outcome'=2) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + EFFICIENT_ABORT : (outcome'=TASKS+1) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + (4/5)*efficient_success2 : (done2'=true) & (weather'=0) & (outcome'=after_success)
+    + (1/5)*efficient_success2 : (done2'=true) & (weather'=storm_after_success) & (outcome'=after_success)
+    + (1/3)*EFFICIENT_RETRY : (weather'=0)
+    + (2/3)*EFFICIENT_RETRY : (weather'=1);
+
+  [attempt_task_2_cautious] outcome=0 & !done2 ->
+      CAUTIOUS_RISK*risk2 : (outcome'=2) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + CAUTIOUS_ABORT : (outcome'=TASKS+1) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + (4/5)*cautious_success2 : (done2'=true) & (weather'=0) & (outcome'=after_success)
+    + (1/5)*cautious_success2 : (done2'=true) & (weather'=storm_after_success) & (outcome'=after_success)
+    + (1/3)*CAUTIOUS_RETRY : (weather'=0)
+    + (2/3)*CAUTIOUS_RETRY : (weather'=1);
+
+  [attempt_task_3_efficient] outcome=0 & !done3 ->
+      EFFICIENT_RISK*risk3 : (outcome'=3) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + EFFICIENT_ABORT : (outcome'=TASKS+1) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + (4/5)*efficient_success3 : (done3'=true) & (weather'=0) & (outcome'=after_success)
+    + (1/5)*efficient_success3 : (done3'=true) & (weather'=storm_after_success) & (outcome'=after_success)
+    + (1/3)*EFFICIENT_RETRY : (weather'=0)
+    + (2/3)*EFFICIENT_RETRY : (weather'=1);
+
+  [attempt_task_3_cautious] outcome=0 & !done3 ->
+      CAUTIOUS_RISK*risk3 : (outcome'=3) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + CAUTIOUS_ABORT : (outcome'=TASKS+1) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + (4/5)*cautious_success3 : (done3'=true) & (weather'=0) & (outcome'=after_success)
+    + (1/5)*cautious_success3 : (done3'=true) & (weather'=storm_after_success) & (outcome'=after_success)
+    + (1/3)*CAUTIOUS_RETRY : (weather'=0)
+    + (2/3)*CAUTIOUS_RETRY : (weather'=1);
+
+  [attempt_task_4_efficient] outcome=0 & !done4 ->
+      EFFICIENT_RISK*risk4 : (outcome'=4) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + EFFICIENT_ABORT : (outcome'=TASKS+1) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + (4/5)*efficient_success4 : (done4'=true) & (weather'=0) & (outcome'=after_success)
+    + (1/5)*efficient_success4 : (done4'=true) & (weather'=storm_after_success) & (outcome'=after_success)
+    + (1/3)*EFFICIENT_RETRY : (weather'=0)
+    + (2/3)*EFFICIENT_RETRY : (weather'=1);
+
+  [attempt_task_4_cautious] outcome=0 & !done4 ->
+      CAUTIOUS_RISK*risk4 : (outcome'=4) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + CAUTIOUS_ABORT : (outcome'=TASKS+1) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + (4/5)*cautious_success4 : (done4'=true) & (weather'=0) & (outcome'=after_success)
+    + (1/5)*cautious_success4 : (done4'=true) & (weather'=storm_after_success) & (outcome'=after_success)
+    + (1/3)*CAUTIOUS_RETRY : (weather'=0)
+    + (2/3)*CAUTIOUS_RETRY : (weather'=1);
+
+  [attempt_task_5_efficient] outcome=0 & !done5 ->
+      EFFICIENT_RISK*risk5 : (outcome'=5) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + EFFICIENT_ABORT : (outcome'=TASKS+1) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + (4/5)*efficient_success5 : (done5'=true) & (weather'=0) & (outcome'=after_success)
+    + (1/5)*efficient_success5 : (done5'=true) & (weather'=storm_after_success) & (outcome'=after_success)
+    + (1/3)*EFFICIENT_RETRY : (weather'=0)
+    + (2/3)*EFFICIENT_RETRY : (weather'=1);
+
+  [attempt_task_5_cautious] outcome=0 & !done5 ->
+      CAUTIOUS_RISK*risk5 : (outcome'=5) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + CAUTIOUS_ABORT : (outcome'=TASKS+1) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + (4/5)*cautious_success5 : (done5'=true) & (weather'=0) & (outcome'=after_success)
+    + (1/5)*cautious_success5 : (done5'=true) & (weather'=storm_after_success) & (outcome'=after_success)
+    + (1/3)*CAUTIOUS_RETRY : (weather'=0)
+    + (2/3)*CAUTIOUS_RETRY : (weather'=1);
+
+  [attempt_task_6_efficient] outcome=0 & !done6 ->
+      EFFICIENT_RISK*risk6 : (outcome'=6) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + EFFICIENT_ABORT : (outcome'=TASKS+1) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + (4/5)*efficient_success6 : (done6'=true) & (weather'=0) & (outcome'=after_success)
+    + (1/5)*efficient_success6 : (done6'=true) & (weather'=storm_after_success) & (outcome'=after_success)
+    + (1/3)*EFFICIENT_RETRY : (weather'=0)
+    + (2/3)*EFFICIENT_RETRY : (weather'=1);
+
+  [attempt_task_6_cautious] outcome=0 & !done6 ->
+      CAUTIOUS_RISK*risk6 : (outcome'=6) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + CAUTIOUS_ABORT : (outcome'=TASKS+1) & (weather'=0) & (done1'=true) & (done2'=true) & (done3'=true) & (done4'=true) & (done5'=true) & (done6'=true)
+    + (4/5)*cautious_success6 : (done6'=true) & (weather'=0) & (outcome'=after_success)
+    + (1/5)*cautious_success6 : (done6'=true) & (weather'=storm_after_success) & (outcome'=after_success)
+    + (1/3)*CAUTIOUS_RETRY : (weather'=0)
+    + (2/3)*CAUTIOUS_RETRY : (weather'=1);
+
+  [absorb] outcome>0 -> (outcome'=outcome);
+endmodule
+
+label "task_1_catastrophic_failure" = outcome=1;
+label "task_2_catastrophic_failure" = outcome=2;
+label "task_3_catastrophic_failure" = outcome=3;
+label "task_4_catastrophic_failure" = outcome=4;
+label "task_5_catastrophic_failure" = outcome=5;
+label "task_6_catastrophic_failure" = outcome=6;
+label "safe_completion" = outcome=TASKS+1;

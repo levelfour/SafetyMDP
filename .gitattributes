@@ -1,0 +1,7 @@
+/results export-ignore
+/output export-ignore
+/tmp export-ignore
+/build export-ignore
+/dist export-ignore
+/benchmarks/results export-ignore
+/.pytest_cache export-ignore

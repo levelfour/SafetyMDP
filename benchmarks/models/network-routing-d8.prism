@@ -1,0 +1,75 @@
+// Fixed network-routing benchmark with observed congestion.
+// node: 0..N-1 routers; N delivery/benign drop; N+i failure class i.
+// congestion: 0=clear, 1=congested; absorbing nodes use 0.
+mdp
+
+const int D = 8;
+const int N = 3*D+4;
+
+formula primary_penalty = (congestion=1 ? 12/1000 : 0) + (mod(node,3)=0 ? 0 : (mod(node,3)=1 ? 1/1000 : 2/1000));
+formula secondary_offset = 1 + mod(node,D-1);
+
+formula primary_low_latency = 55/1000 + primary_penalty;
+formula secondary_low_latency = 8/1000 + (mod(node,2)=0 ? 0 : 1/1000);
+formula success_low_latency = 1 - primary_low_latency - secondary_low_latency - 8/1000 - 100/1000;
+formula primary_class_low_latency = mod(2*node+0,D);
+formula secondary_class_low_latency = mod(primary_class_low_latency+secondary_offset,D);
+formula next_low_latency = min(N,node+3);
+
+formula primary_balanced = 35/1000 + primary_penalty;
+formula secondary_balanced = 15/1000 + (mod(node+1,2)=0 ? 0 : 1/1000);
+formula success_balanced = 1 - primary_balanced - secondary_balanced - 12/1000 - 100/1000;
+formula primary_class_balanced = mod(2*node+3,D);
+formula secondary_class_balanced = mod(primary_class_balanced+secondary_offset,D);
+formula next_balanced = min(N,node+2);
+
+formula primary_secure_detour = 20/1000 + primary_penalty;
+formula secondary_secure_detour = 25/1000 + (mod(node+2,2)=0 ? 0 : 1/1000);
+formula success_secure_detour = 1 - primary_secure_detour - secondary_secure_detour - 20/1000 - 160/1000;
+formula primary_class_secure_detour = mod(2*node+6,D);
+formula secondary_class_secure_detour = mod(primary_class_secure_detour+secondary_offset,D);
+formula next_secure_detour = max(0,node-1);
+
+module benchmark
+  node : [0..N+D] init 0;
+  congestion : [0..1] init 0;
+
+  [low_latency] node<N ->
+      primary_low_latency : (node'=N+1+primary_class_low_latency) & (congestion'=0)
+    + secondary_low_latency : (node'=N+1+secondary_class_low_latency) & (congestion'=0)
+    + 8/1000 : (node'=N) & (congestion'=0)
+    + (7/8)*success_low_latency : (node'=next_low_latency) & (congestion'=0)
+    + (1/8)*success_low_latency : (node'=next_low_latency) & (congestion'=next_low_latency=N ? 0 : 1)
+    + (1/4)*(100/1000) : (congestion'=0)
+    + (3/4)*(100/1000) : (congestion'=1);
+
+  [balanced] node<N ->
+      primary_balanced : (node'=N+1+primary_class_balanced) & (congestion'=0)
+    + secondary_balanced : (node'=N+1+secondary_class_balanced) & (congestion'=0)
+    + 12/1000 : (node'=N) & (congestion'=0)
+    + (7/8)*success_balanced : (node'=next_balanced) & (congestion'=0)
+    + (1/8)*success_balanced : (node'=next_balanced) & (congestion'=next_balanced=N ? 0 : 1)
+    + (1/4)*(100/1000) : (congestion'=0)
+    + (3/4)*(100/1000) : (congestion'=1);
+
+  [secure_detour] node<N ->
+      primary_secure_detour : (node'=N+1+primary_class_secure_detour) & (congestion'=0)
+    + secondary_secure_detour : (node'=N+1+secondary_class_secure_detour) & (congestion'=0)
+    + 20/1000 : (node'=N) & (congestion'=0)
+    + (7/8)*success_secure_detour : (node'=next_secure_detour) & (congestion'=0)
+    + (1/8)*success_secure_detour : (node'=next_secure_detour) & (congestion'=next_secure_detour=N ? 0 : 1)
+    + (1/4)*(160/1000) : (congestion'=0)
+    + (3/4)*(160/1000) : (congestion'=1);
+
+  [absorb] node>=N -> (node'=node);
+endmodule
+
+label "failure_class_1" = node=N+1;
+label "failure_class_2" = node=N+2;
+label "failure_class_3" = node=N+3;
+label "failure_class_4" = node=N+4;
+label "failure_class_5" = node=N+5;
+label "failure_class_6" = node=N+6;
+label "failure_class_7" = node=N+7;
+label "failure_class_8" = node=N+8;
+label "safe_completion" = node=N;

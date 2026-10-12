@@ -1,0 +1,10 @@
+{
+  "terminal_labels": ["terminal_left", "terminal_right"],
+  "safe_region": {
+    "type": "formula",
+    "formula": "x1^2 + x2^2 <= theta",
+    "parameters": {
+      "theta": 0.38
+    }
+  }
+}

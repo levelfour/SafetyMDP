@@ -1,0 +1,28 @@
+{
+  "schema_version": 2,
+  "title": "study",
+  "description": "All five methods: one repetition, at most 50 refinements, no run or Storm-call timeout; 24 quadratic cases across three domains",
+  "output_directory": "results/paper",
+  "methods": [
+    "l2",
+    "linf",
+    "gauge",
+    "sandwich-lk",
+    "sandwich-lk-gauge"
+  ],
+  "repetitions": 1,
+  "run_timeout_seconds": null,
+  "storm_timeout_seconds": null,
+  "precision": 1e-7,
+  "geometry_tolerance": 1e-8,
+  "max_iterations": 50,
+  "sandwich_precision": 0.000001,
+  "suites": [
+    {
+      "key": "domains",
+      "label": "Domain models",
+      "manifest": "experiments/manifests/domains.json",
+      "minimum_precision": 1e-11
+    }
+  ]
+}
